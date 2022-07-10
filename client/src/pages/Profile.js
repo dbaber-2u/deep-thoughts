@@ -5,17 +5,17 @@ import ThoughtList from '../components/ThoughtList';
 import FriendList from '../components/FriendList';
 
 import { useQuery } from '@apollo/client';
-import { QUERY_USER } from '../utils/queries';
+import { QUERY_USER, QUERY_ME } from '../utils/queries';
 
 
-const Profile = () => {
+const Profile = props => {
   const { username: userParam } = useParams();
-
-  const { loading, data } = useQuery(QUERY_USER, {
+  console.log(userParam);
+  const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam }
   });
 
-  const user = data?.user || {};
+  const user = data?.me || data?.user || {};
 
   if (loading) {
     return <div>Loading...</div>;
